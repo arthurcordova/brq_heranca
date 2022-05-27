@@ -20,9 +20,9 @@ import com.mobwaysolutions.heranca.validalogin.Usuario
  * - Batata
  *
  */
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), IAutenticacao{
 
-    lateinit var textViewMensagemRetorno : TextView
+    var textViewMensagemRetorno : TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,25 +31,27 @@ class MainActivity : AppCompatActivity() {
         val editTextEmail = findViewById<EditText>(R.id.editTextEmail)
         val editTextSenha = findViewById<EditText>(R.id.editTextSenha)
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
-        textViewMensagemRetorno = findViewById(R.id.tvMensagemRetorno)
+//        textViewMensagemRetorno = findViewById(R.id.tvMensagemRetorno)
 
         buttonLogin.setOnClickListener {
             val emailDaTela = editTextEmail.text.toString()
             val senhaDaTela = editTextSenha.text.toString()
 
             val usuario = Usuario(senha = senhaDaTela, email = emailDaTela)
-            usuario.validarSeEmailESenhaEstaoCorretos(object : IAutenticacao {
-                override fun sucesso() {
-                    textViewMensagemRetorno.text = "Parabéns :) login com sucesso"
-                }
-
-                override fun erro() {
-                    textViewMensagemRetorno.text = "Erro :( Falha no login"
-                }
-            })
-
+            usuario.validarSeEmailESenhaEstaoCorretos(this)
         }
 
+    }
+
+    override fun sucesso() {
+        textViewMensagemRetorno?.let {
+            it.text = "Parabéns :) login com sucesso"
+        }
+        textViewMensagemRetorno!!.text = ""
+    }
+
+    override fun erro() {
+        textViewMensagemRetorno?.text = "Erro :( Falha no login"
     }
 
 }
