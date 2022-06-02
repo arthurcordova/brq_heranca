@@ -9,6 +9,12 @@
     tools:context=".SegundaActivity">
 
     <Button
+        android:id="@+id/bParaLista"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vá para lista" />
+
+    <Button
         android:id="@+id/b1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +30,12 @@
     <TextView
         android:id="@+id/tvResult"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tvSeguidores"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

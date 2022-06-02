@@ -23,13 +23,15 @@ class MainActivity : AppCompatActivity(), IAutenticacao {
     var textViewMensagemRetorno : TextView? = null
     var editTextEmail : EditText? = null
     var editTextSenha : EditText? = null
+    var tvSeguidores : TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        editTextEmail = findViewById<EditText>(R.id.editTextEmail)
-        editTextSenha = findViewById<EditText>(R.id.editTextSenha)
+        editTextEmail = findViewById(R.id.editTextEmail)
+        editTextSenha = findViewById(R.id.editTextSenha)
+        tvSeguidores = findViewById(R.id.tvSeguidores)
         val buttonLogin = findViewById<Button>(R.id.buttonLogin)
         textViewMensagemRetorno = findViewById(R.id.tvMensagemRetorno)
 
@@ -37,11 +39,18 @@ class MainActivity : AppCompatActivity(), IAutenticacao {
             val emailDaTela = editTextEmail?.text.toString()
             val senhaDaTela = editTextSenha?.text.toString()
 
+            MeuSingleton.atualizarSeguidores()
+
             val usuario = Usuario(senha = senhaDaTela, email = emailDaTela)
             usuario.validarSeEmailESenhaEstaoCorretos(this)
         }
-
     }
+
+    override fun onResume() {
+        super.onResume()
+        tvSeguidores?.text = "Seguidores: ${MeuSingleton.quantidadeSeSeguidores}"
+    }
+
 
     override fun sucesso() {
         val minhaIntencaoDeIrParaSegundaTela = Intent(this, SegundaActivity::class.java)
